@@ -1,11 +1,14 @@
 from django.db import models
-from helpers.models import TrackingModel
+from .helpers import Bets, TrackingModel
 
 
-class Bets(TrackingModel):
-    bet_type = models.CharField(max_length=20)
-    bet_amount = models.IntegerField()
-    bet_result = models.IntegerField()
-    bet_status = models.CharField(max_length=20)
-    bet_result_amount = models.IntegerField()
-    bet_result_status = models.CharField(max_length=20)
+#! Blogabet Models
+class BlogabetAuthor(TrackingModel):
+    author_name = models.CharField(max_length=255)
+    author_yield = models.FloatField()
+    author_odds = models.IntegerField()
+
+
+class BlogabetBets(Bets):
+    author = models.ForeignKey(BlogabetAuthor, on_delete=models.CASCADE, null=True, blank=True)
+    stake = models.IntegerField()
