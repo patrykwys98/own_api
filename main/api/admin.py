@@ -1,3 +1,4 @@
 from django.contrib import admin
+from bets.models import Bets
 
-# Register your models here.
+admin.site.register(Bets)
