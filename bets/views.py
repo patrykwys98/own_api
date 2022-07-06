@@ -3,12 +3,12 @@ from rest_framework.response import Response
 
 
 from .models import BlogabetBets, BlogabetAuthor, Dyscipline
-from .serializers import BetsSerializer
+from .serializers import BlogabetBetsSerializer
 
 
-class BetMixinView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView,):
+class BlogabetBetMixinView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView,):
     queryset = BlogabetBets.objects.all()
-    serializer_class = BetsSerializer
+    serializer_class = BlogabetBetsSerializer
 
     def perform_create(self, serializer):
         author_name = self.request.data.get('author_name')
@@ -41,3 +41,4 @@ class BetMixinView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+    

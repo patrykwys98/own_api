@@ -1,6 +1,6 @@
 from django.urls import path, include
-from .views import BetMixinView
+from .views import BlogabetBetMixinView
 
 urlpatterns = [
-    path('', BetMixinView.as_view()),
+    path('blogabet/', BlogabetBetMixinView.as_view()),
 ]

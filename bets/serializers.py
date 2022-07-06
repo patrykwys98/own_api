@@ -12,7 +12,7 @@ class DysciplineSerializer(ModelSerializer):
         model = BlogabetAuthor
         fields = ['dyscipline_name']
 
-class BetsSerializer(ModelSerializer):
+class BlogabetBetsSerializer(ModelSerializer):
     author = SerializerMethodField()
     author_yield = SerializerMethodField()
     author_odds = SerializerMethodField()

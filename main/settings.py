@@ -1,8 +1,8 @@
 from pathlib import Path
 import os
-import django_heroku
+
 import dotenv
-import dj_database_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_file = os.path.join(BASE_DIR, ".env")
@@ -26,6 +26,9 @@ INSTALLED_APPS = [
     #! Third party apps
     'rest_framework',
     'corsheaders',
+
+    #! Auth
+    "rest_framework.authtoken",
 
     #! Internal apps,
     'api',
@@ -63,8 +66,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#! DB, dj_database_url
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -92,6 +103,24 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#! REST Framework Settings
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": "api.authentication.TokenAuthentication",
+#     "DEFAULT_PERMISSION_CLASSES": [
+#         "rest_framework.permissions.IsAuthenticatedOrReadOnly", 
+#     ],
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'api.authentication.TokenAuthentication',
+
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+}
+
 #! CORS settings
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -102,6 +131,7 @@ USE_TZ = False
 L10N=False
 
 #! Heroku
+import django_heroku
 django_heroku.settings(locals())
 
 options = DATABASES['default'].get('OPTIONS', {})
