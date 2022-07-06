@@ -14,8 +14,8 @@ class Bets(TrackingModel):
     event = models.CharField(max_length=255)
     pick = models.CharField(max_length=255)
     odd = models.FloatField()
-    start = models.CharField(max_length=100)
+    start = models.DateTimeField(max_length=100)
 
     class Meta:
         abstract = True
-        ordering = ['-created_at']
+        ordering = ['-start']

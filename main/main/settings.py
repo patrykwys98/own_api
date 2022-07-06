@@ -1,9 +1,13 @@
 from pathlib import Path
 import os
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
+import django_heroku
+import dotenv
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -21,6 +25,7 @@ INSTALLED_APPS = [
 
     #! Third party apps
     'rest_framework',
+    'corsheaders',
 
     #! Internal apps,
     'api',
@@ -30,6 +35,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -57,16 +63,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -87,10 +85,28 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
 
-USE_TZ = True
+USE_I18N = True
 
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#! CORS settings
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "89.64.4.29",
+]
+
+#! Own settings
+
+DATETIME_FORMAT="%Y-%m-%d%H:%M:%S"
+USE_TZ = False
+L10N=False
+
+#! Heroku
+django_heroku.settings(locals())
+
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
