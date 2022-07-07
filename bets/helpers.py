@@ -18,4 +18,4 @@ class Bets(TrackingModel):
 
     class Meta:
         abstract = True
-        ordering = ['-start']
+        ordering = ['start']
