@@ -58,7 +58,7 @@ class ZawodTyperAuthorSerializer(ModelSerializer):
 
 class ZawodTyperBetsSerializer(ModelSerializer):
     author = SerializerMethodField()
-    author_yield = SerializerMethodField()
+    author_effective = SerializerMethodField()
     author_odds = SerializerMethodField()
     dyscipline_name = SerializerMethodField()
 
@@ -74,7 +74,7 @@ class ZawodTyperBetsSerializer(ModelSerializer):
 
     def get_author_yield(self, obj):
         try:
-            return obj.author.author_yield
+            return obj.author.author_effective
         except:
             return None
 
