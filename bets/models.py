@@ -43,7 +43,7 @@ class ZawodTyperBets(Bets):
     bukmacher = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.event + ' ' + self.pick + ' ' + str(self.odd) + ' ' + str(self.start) + ' ' + str(self.author) + ' ' + str(self.dyscipline) + ' ' + str(self.stake)
+        return self.event + ' ' + self.pick + ' ' + str(self.odd) + ' ' + str(self.start) + ' ' + str(self.author) + ' ' + str(self.dyscipline)
 
 #! Forum bukmacherskie Models
 class ForumBukmacherskieAuthor(TrackingModel):
@@ -60,4 +60,4 @@ class ForumBukmacherskieBets(Bets):
     analise = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.event + ' ' + self.pick + ' ' + str(self.odd) + ' ' + str(self.start) + ' ' + str(self.author) + ' ' + str(self.dyscipline) + ' ' + str(self.stake)
+        return self.event + ' ' + self.pick + ' ' + str(self.odd) + ' ' + str(self.start) + ' ' + str(self.author) + ' ' + str(self.dyscipline)
