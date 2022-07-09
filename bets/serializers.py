@@ -72,7 +72,7 @@ class ZawodTyperBetsSerializer(ModelSerializer):
         except:
             return None
 
-    def get_author_yield(self, obj):
+    def get_author_effective(self, obj):
         try:
             return obj.author.author_effective
         except:
